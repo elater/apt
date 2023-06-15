@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PictureDb List</title>
+    <style>
+        img {
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h1>PictureDb List</h1>
+    <a href="{% url 'add_picturedb' %}">Add PictureDb</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Picture 1</th>
+                <th>Picture 2</th>
+                <th>Webpage</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for picturedb in picturedbs %}
+                <tr>
+                    <td>{{ picturedb.name }}</td>
+                    <td><img src="{{ picturedb.picture1.url }}" alt="Picture 1"></td>
+                    <td><img src="{{ picturedb.picture2.url }}" alt="Picture 2"></td>
+                    <td><a href="{{ picturedb.webpage }}" target="_blank">{{ picturedb.webpage }}</a></td>
+                    <td>
+<form action="{% url 'delete_picturedb' picturedb.id %}" method="POST" onsubmit="return confirm('Are you sure you want to delete this entry?');">
+    {% csrf_token %}
+    <input type="submit" value="Delete">
+</form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+</body>
+</html>
